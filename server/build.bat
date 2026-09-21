@@ -1,0 +1,8 @@
+echo off
+set path=C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\TortoiseGit\bin;C:\Program Files\Go\bin;C:\Program Files\VSCodium\bin;C:\Users\erik\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Yubico\Yubico PIV Tool\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Users\erik\.cargo\bin;C:\Users\erik\AppData\Local\Microsoft\WindowsApps;C:\Users\erik\go\bin;C:\Users\erik\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Development\mingw\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Users\erik\.dotnet\tools;C:\Users\erik\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-6.1-full_build\bin;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64;
+
+for /f "delims=" %%a in ('git rev-list --abbrev-commit -1 HEAD') do @set GIT_COMMIT=%%a
+for /f "delims=" %%a in ('git describe --tags --dirty') do @set GIT_VERSION=%%a
+rem set goarch=amd64
+set cgo_enabled=1
+go build -ldflags "-X main.GitCommit=%GIT_COMMIT% -X main.GitVersion=%GIT_VERSION%"

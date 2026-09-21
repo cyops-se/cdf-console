@@ -1,0 +1,10 @@
+graph TB
+    subgraph Med_CDF["Med CDF Console: krypterat stjärnnät ovanpå"]
+        C[Central utrustning] --- H["Hub\n(Teltonika-router,\nfiltrerar & terminerar tunnlar)"]
+        H -- "WireGuard + VXLAN\n(krypterad tunnel)" --- E1["Endpoint 1\n(Teltonika-router)"]
+        H -- "WireGuard + VXLAN\n(krypterad tunnel)" --- E2["Endpoint 2\n(Teltonika-router)"]
+        H -- "WireGuard + VXLAN\n(krypterad tunnel)" --- E3["Endpoint 3\n(Teltonika-router)"]
+        E1 --- F1[Fältenhet 1\nsamma IP som idag]
+        E2 --- F2[Fältenhet 2\nsamma IP som idag]
+        E3 --- F3[Fältenhet 3\nsamma IP som idag]
+    end

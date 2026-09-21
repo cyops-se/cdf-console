@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Op as Administratör (UI)
+    participant Srv as CDF Console (server)
+    participant Rtr as Teltonika-router
+
+    Op->>Srv: Starta onboarding för enhet på 192.168.1.1
+    Srv->>Rtr: Kontrollera åtkomst / hämta info
+    Srv->>Rtr: Verifiera/uppgradera firmware
+    Srv->>Rtr: Installera VXLAN-paket
+    Srv->>Rtr: Minimera (stäng oanvända tjänster)
+    Srv->>Rtr: Sätt LAN/WAN, byt lösenord
+    Srv->>Rtr: Installera SSH-nyckel, initiera WireGuard-nycklar
+    Srv->>Rtr: Konfigurera syslog → server:8514
+    Rtr-->>Srv: Status: Adopted
+    Op->>Srv: Lägg enhet i System (som Hub eller Endpoint)
+    Op->>Srv: Slutför konfiguration (pairing) Endpoint↔Hub
+    Srv->>Rtr: init_wg / add_wg_peer, init_vxlan / add_vxlan_peer
+    Note over Rtr: Hub kör init_hub_filter.sh (ebtables):<br/>endast trafik till auktoriserade fältenheter tillåts
+
+    loop Drift
+        Rtr-->>Srv: syslog: ebtables/netfilter LOG-rader (UDP 8514)
+        Srv->>Srv: Tolka till flödesposter (server/flows)
+        Op->>Srv: Granska/tillåt/blockera flöden i UI
+    end

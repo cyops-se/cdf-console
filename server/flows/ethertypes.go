@@ -1,0 +1,68 @@
+package flows
+
+import (
+	"server/messages"
+)
+
+var etherTypes = []messages.EtherType{
+	{Value: "0x0800", Description: "Internet Protocol version 4 (IPv4)"},
+	{Value: "0x0806", Description: "Address Resolution Protocol (ARP)"},
+	{Value: "0x0842", Description: "Wake-on-LAN[8]"},
+	{Value: "0x22EA", Description: "Stream Reservation Protocol"},
+	{Value: "0x22F0", Description: "Audio Video Transport Protocol (AVTP)"},
+	{Value: "0x22F3", Description: "IETF TRILL Protocol"},
+	{Value: "0x6002", Description: "DEC MOP RC"},
+	{Value: "0x6003", Description: "DECnet Phase IV, DNA Routing"},
+	{Value: "0x6004", Description: "DEC LAT"},
+	{Value: "0x8035", Description: "Reverse Address Resolution Protocol (RARP)"},
+	{Value: "0x809B", Description: "AppleTalk (EtherTalk)"},
+	{Value: "0x80D5", Description: "LLC PDU (in particular, IBM SNA), preceded by 2 bytes length and 1 byte padding[9]"},
+	{Value: "0x80F3", Description: "AppleTalk Address Resolution Protocol (AARP)"},
+	{Value: "0x8100", Description: "VLAN-tagged frame (IEEE 802.1Q) and Shortest Path Bridging IEEE 802.1aq with NNI compatibility[10]"},
+	{Value: "0x8102", Description: "Simple Loop Prevention Protocol (SLPP)"},
+	{Value: "0x8103", Description: "Virtual Link Aggregation Control Protocol (VLACP)"},
+	{Value: "0x8137", Description: "IPX"},
+	{Value: "0x8204", Description: "QNX Qnet"},
+	{Value: "0x86DD", Description: "Internet Protocol Version 6 (IPv6)"},
+	{Value: "0x8808", Description: "Ethernet flow control"},
+	{Value: "0x8809", Description: "Ethernet Slow Protocols[11] such as the Link Aggregation Control Protocol (LACP)"},
+	{Value: "0x8819", Description: "CobraNet"},
+	{Value: "0x8847", Description: "MPLS unicast"},
+	{Value: "0x8848", Description: "MPLS multicast"},
+	{Value: "0x8863", Description: "PPPoE Discovery Stage"},
+	{Value: "0x8864", Description: "PPPoE Session Stage"},
+	{Value: "0x887B", Description: "HomePlug 1.0 MME"},
+	{Value: "0x888E", Description: "EAP over LAN (IEEE 802.1X)"},
+	{Value: "0x8892", Description: "PROFINET Protocol"},
+	{Value: "0x889A", Description: "HyperSCSI (SCSI over Ethernet)"},
+	{Value: "0x88A2", Description: "ATA over Ethernet"},
+	{Value: "0x88A4", Description: "EtherCAT Protocol"},
+	{Value: "0x88A8", Description: "Service VLAN tag identifier (S-Tag) on Q-in-Q tunnel"},
+	{Value: "0x88AB", Description: "Ethernet Powerlink[citation needed]"},
+	{Value: "0x88B8", Description: "GOOSE (Generic Object Oriented Substation event)"},
+	{Value: "0x88B9", Description: "GSE (Generic Substation Events) Management Services"},
+	{Value: "0x88BA", Description: "SV (Sampled Value Transmission)"},
+	{Value: "0x88BF", Description: "MikroTik RoMON (unofficial)"},
+	{Value: "0x88CC", Description: "Link Layer Discovery Protocol (LLDP)"},
+	{Value: "0x88CD", Description: "SERCOS III"},
+	{Value: "0x88E1", Description: "HomePlug Green PHY"},
+	{Value: "0x88E3", Description: "Media Redundancy Protocol (IEC62439-2)"},
+	{Value: "0x88E5", Description: "IEEE 802.1AE MAC security (MACsec)"},
+	{Value: "0x88E7", Description: "Provider Backbone Bridges (PBB) (IEEE 802.1ah)"},
+	{Value: "0x88F7", Description: "Precision Time Protocol (PTP) over IEEE 802.3 Ethernet"},
+	{Value: "0x88F8", Description: "NC-SI"},
+	{Value: "0x88FB", Description: "Parallel Redundancy Protocol (PRP)"},
+	{Value: "0x8902", Description: "IEEE 802.1ag Connectivity Fault Management (CFM) Protocol / ITU-T Recommendation Y.1731 (OAM)"},
+	{Value: "0x8906", Description: "Fibre Channel over Ethernet (FCoE)"},
+	{Value: "0x8914", Description: "FCoE Initialization Protocol"},
+	{Value: "0x8915", Description: "RDMA over Converged Ethernet (RoCE)"},
+	{Value: "0x891D", Description: "TTEthernet Protocol Control Frame (TTE)"},
+	{Value: "0x893a", Description: "1905.1 IEEE Protocol"},
+	{Value: "0x892F", Description: "High-availability Seamless Redundancy (HSR)"},
+	{Value: "0x9000", Description: "Ethernet Configuration Testing Protocol[12]"},
+	{Value: "0xF1C1", Description: "Redundancy Tag (IEEE 802.1CB Frame Replication and Elimination for Reliability)"},
+}
+
+func GetAllEtherTypesAsList() []messages.EtherType {
+	return etherTypes
+}

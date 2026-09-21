@@ -1,0 +1,29 @@
+graph TB
+    subgraph Browser["Webbläsare"]
+        UI["Vue 3 + Vuetify SPA\n(ui/src)\nPinia state, vue-router/auto"]
+    end
+
+    subgraph ServerBin["server.exe (Go, Fiber v2)"]
+        WEB["server/web\nHTTP :3080 + WebSocket /ws\nserverar inbäddad SPA (go:embed)"]
+        ROUTES["server/routes\n/api/data, /api/device, /api/flows,\n/api/help, /api/system"]
+        DEVICES["server/devices\nonboarding, SSH, RUT-API-klient,\nbakgrundsjobb (presence/availability)"]
+        FLOWS["server/flows\nsyslogd :8514/udp\ntrafikflöden (allow/block/grey/black)"]
+        HELP["server/help\ninbäddad markdown-dokumentation"]
+        DB["server/db + server/types\nGORM / SQLite (cdf-console.db)"]
+        PROV["server/provisioning\nfirmware + shellskript per\nrutx/rut9/rut2/rutm"]
+    end
+
+    subgraph Routers["Teltonika-routrar (Hub + Endpoints)"]
+        RUT["RUT-webAPI (HTTP)\n+ SSH\n+ ebtables/WireGuard/VXLAN\n+ syslog"]
+    end
+
+    UI <-- "REST + WebSocket" --> WEB
+    WEB --> ROUTES
+    ROUTES --> DEVICES
+    ROUTES --> FLOWS
+    ROUTES --> HELP
+    ROUTES --> DB
+    DEVICES --> DB
+    DEVICES -- "HTTP-login,\nSSH, skriptkörning" --> RUT
+    DEVICES --> PROV
+    RUT -- "syslog (ebtables/netfilter LOG)" --> FLOWS
