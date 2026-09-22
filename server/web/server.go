@@ -62,6 +62,12 @@ func RunWeb() {
 		Browse: true,
 	}))
 
+	app.Get("/help/*", func(ctx *fiber.Ctx) error {
+		ctx.Status(200)
+		ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+		return ctx.SendString(admin)
+	})
+
 	app.Get("/ui/*", func(ctx *fiber.Ctx) error {
 		ctx.Status(200)
 		ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)

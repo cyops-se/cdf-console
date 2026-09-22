@@ -7,7 +7,7 @@ Välkommen till den inbyggda hjälpen där förhoppningen är att du ska hitta n
 Om du är van användare av detta verktyg kan du hoppa direkt till hantering av enheter och system:
 
 - [Lägg till ny endpoint](03-new-endpoint.md)
-- [Lägg till ny hub](02-new-hub.md))
+- [Lägg till ny hub](02-new-hub.md)
 - [Lägg till nytt system](01-new-system.md)
 - [Network Configuration](networking/overview.md)
 - [Troubleshooting](troubleshooting/common-issues.md)
