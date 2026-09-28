@@ -114,9 +114,9 @@ const renderedHtml = computed(() => {
   if (!currentContent.value) return ''
 
   // Replace relative image paths with API endpoint URLs
-  // Matches: ![alt text](images/filename.png) or ![](images/file.jpg)
+  // Matches: ![alt text](images/filename.png), ![](../images/file.jpg), etc.
   const processedMarkdown = currentContent.value.replace(
-    /!\[([^\]]*)\]\(images\/([^)]+)\)/g,
+    /!\[([^\]]*)\]\((?:\.\.?\/)*images\/([^)]+)\)/g,
     '![$1](/api/help/images/$2)'
   )
 
@@ -173,6 +173,27 @@ async function loadDocContent(path) {
   }
 }
 
+// Resolve a markdown link href against the currently active document path,
+// the same way the sidebar menu resolves its (already fully-qualified) paths.
+function resolveDocPath(currentPath, href) {
+  const currentDir = currentPath.substring(0, currentPath.lastIndexOf('/'))
+  const isAbsolute = href.startsWith('/')
+
+  const baseSegments = isAbsolute ? [] : currentDir.split('/').filter(Boolean)
+  const hrefSegments = href.split('/').filter(part => part !== '' && part !== '.')
+
+  const segments = [...baseSegments]
+  for (const part of hrefSegments) {
+    if (part === '..') {
+      segments.pop()
+    } else {
+      segments.push(part)
+    }
+  }
+
+  return segments.join('/')
+}
+
 // Handle clicks on links in markdown content
 function handleLinkClick(event) {
   const target = event.target
@@ -181,22 +202,7 @@ function handleLinkClick(event) {
     // Handle relative markdown links
     if (href && href.endsWith('.md') && !href.startsWith('http')) {
       event.preventDefault()
-      // Resolve relative path based on current document
-      const currentDir = activePath.value.substring(0, activePath.value.lastIndexOf('/'))
-      let newPath = href
-
-      if (href.startsWith('../')) {
-        // Go up one directory
-        const parentDir = currentDir.substring(0, currentDir.lastIndexOf('/'))
-        newPath = parentDir + '/' + href.substring(3)
-      } else if (!href.startsWith('/')) {
-        // Same directory
-        newPath = currentDir + '/' + href
-      } else {
-        // Absolute path (remove leading slash)
-        newPath = href.substring(1)
-      }
-
+      const newPath = resolveDocPath(activePath.value, href)
       loadDocContent(newPath)
     }
   }

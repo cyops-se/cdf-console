@@ -62,17 +62,17 @@ func RunWeb() {
 		Browse: true,
 	}))
 
-	app.Get("/help/*", func(ctx *fiber.Ctx) error {
+	serveIndex := func(ctx *fiber.Ctx) error {
 		ctx.Status(200)
 		ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
 		return ctx.SendString(admin)
-	})
+	}
 
-	app.Get("/ui/*", func(ctx *fiber.Ctx) error {
-		ctx.Status(200)
-		ctx.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
-		return ctx.SendString(admin)
-	})
+	app.Get("/help", serveIndex)
+	app.Get("/help/*", serveIndex)
+
+	app.Get("/ui", serveIndex)
+	app.Get("/ui/*", serveIndex)
 
 	// WebSocket registration
 	app.Get("/ws", websocket.New(func(c *websocket.Conn) {

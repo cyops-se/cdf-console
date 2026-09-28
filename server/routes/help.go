@@ -73,7 +73,7 @@ func GetDocContent(c *fiber.Ctx) error {
 	}
 
 	response.Success = true
-	response.Content = strings.ReplaceAll(content, "../", "")
+	response.Content = content
 	response.Path = decodedPath
 	return c.Status(http.StatusOK).JSON(response)
 }
